@@ -189,3 +189,71 @@ root.render(parent);
 ```
 render replaces the code in root element, we can reload and check 
 
+NPM - node package manager
+
+npm init - to create package.json which is a configuration file for npm
+
+
+installing dependencies
+
+Bundlers to build, minify - ex. webpack , parcel, vite
+
+```sh
+npm install -D parcel
+```
+Two types of dependencies we can install
+* dev dependency - required for development
+* normal dependency - used in production
+
+"parcel": "^2.11.0"
+
+**~version** “Approximately equivalent to version”, will update you to all future patch versions, without incrementing the minor version. ~1.2.3 will use releases from 1.2.3 to <1.3.0.
+
+**^version** “Compatible with version”, will update you to all future minor/patch versions, without incrementing the major version. ^1.2.3 will use releases from 1.2.3 to <2.0.0.
+
+why package-lock.json - keeps the dependencies exact version 
+Transitive denpendencies - when we install parcel it install its dependencies
+
+add `.gitignore` node_modules/
+
+to generate dev build and serve in localhost
+```sh
+npx parcel index.html
+```
+parcel creates a dev build and server http://localhost:1234/
+
+npm to install a package
+npx to execute a package
+
+```sh
+npm install react
+npm install react-dom
+```
+## Parcel
+- Dev Build
+- Local Server
+- HMR - Hot Module Replacement
+- uses File watching algorithm - written in c++
+- Caching - faster builds
+- Image Optimization
+- Minification , Bundling , Compress
+- Consistent Hashing
+- Code Splitting
+- Differential Bundling
+- Diagnostics - Error Handling
+- HTTPS
+- Tee Shaking - remove unused code
+- Different dev an prod build bundles
+
+command To create production build
+```sh
+npx parcel build index.html
+```
+
+Browserslist package - Shared browser compatibility config for popular JavaScript tools like Autoprefixer, Babel, ESLint, PostCSS, and Webpack
+```js
+//package.json
+"browserslist": [
+    "last 3 versions"
+  ]
+```
