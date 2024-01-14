@@ -257,3 +257,104 @@ Browserslist package - Shared browser compatibility config for popular JavaScrip
     "last 3 versions"
   ]
 ```
+
+adding scripts in package.json
+```js
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+```
+
+we can start the dev server with
+```sh
+npm run start 
+or npm start #only for start
+```
+the build with
+```sh
+npm run build
+```
+
+JSX - XML/HTML like syntax
+jsx (transpiled before it reaches the js) - parcel - Babel
+```
+const jsxHeading = <h1 id="heading">Hello from JSX</h1>
+```
+
+html attributes are of camelCase in JSX
+
+```jsx
+const jsxHeading = (
+   <h1 id="heading" className="head" tabIndex="1">Hello from JSX</h1>
+);
+```
+
+React Components
+creating functional component
+
+```jsx
+const HeadingComponent = () => {
+  return <h1>Functional COmponent</h1>
+}
+
+// or
+
+const HeadingComponent = () => (
+   <h1>Functional COmponent</h1>
+)
+```
+Component Composition - composing two components in one another
+
+```js
+import React from "react";
+import ReactDOM  from "react-dom/client";
+
+// React.createElement => Object => HTMLElement(render)
+
+const heading = React.createElement(
+  "h1",
+  {id: "heading"},
+  "Hello from  react element"
+)
+// JSX - XML/HTML like syntax
+// jsx (transpiled before it reaches the js) - parcel - Babel
+// this is react Element
+const jsxHeading = (
+  <h1 id="heading" className="head" tabIndex="1">Hello from JSX</h1>
+);
+
+// this is react component
+const HeadingComponent = () => {
+  return <h1>Functional COmponent</h1>
+}
+
+const Title = () => (
+  <h1 className="heading">
+    Title h1
+  </h1>
+)
+
+const DivComponent = () => (
+  <div id="container">
+    <h1>Functional COmponent</h1>
+    <Title/>
+  </div>
+)
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+// root.render(jsxHeading) // rendering react element
+// root.render(<HeadingComponent/>) // rendering react component
+root.render(<DivComponent/>)
+```
+
+in react component we can use js in {}
+jsx takes care of XSS, it sanitizes the data in {}
+```js
+    <Title/>
+    <Title></Title>
+    {Title()}
+```
+

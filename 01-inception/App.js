@@ -1,37 +1,45 @@
 import React from "react";
 import ReactDOM  from "react-dom/client";
 
-{/* 
-  <div id="parent">
-    <div id="child">
-      <h1>header1</h1>
-      <h2>header2</h2>
-    </div>
-  </div> 
-*/}
-
-
-const parent = React.createElement(
-  "div",
-  {id: "parent", key: 'parentKey'},[
-    
-    React.createElement("div", {id: 'child', key: 'div1'}, 
-    [React.createElement("h1",{key:'a'}, "header1"), React.createElement("h1",{key:'b'}, "header2")]),
-    React.createElement("div", {id: 'child2', key: 'div2'}, 
-    [React.createElement("h1",{key: 'c'}, "header1"), React.createElement("h1",{key: 'd'}, "header2")])
-  ]
-)
+// React.createElement => Object => HTMLElement(render)
 
 const heading = React.createElement(
   "h1",
-  {id: "heading", title : "react heading1"},
-  "Hello World from React h1 element"
+  {id: "heading"},
+  "Hello from  react element"
+)
+// JSX - XML/HTML like syntax
+// jsx (transpiled before it reaches the js) - parcel - Babel
+// this is react Element
+const jsxHeading = (
+  <h1 id="heading" className="head" tabIndex="1">Hello from JSX - react element</h1>
 );
 
-// console.log(typeof heading);
-console.log("react create Element h1", heading);
-console.log('parent div', parent)
+// this is react component
+const HeadingComponent = () => {
+  return <h1>Functional COmponent</h1>
+}
+
+const Title = () => (
+  <h1 className="heading">
+    Title h1
+  </h1>
+)
+
+const DivComponent = () => (
+  <div id="container">
+    <h1>Functional COmponent</h1>
+    {20 +30}
+    {jsxHeading}
+    
+    <Title/>
+    <Title></Title>
+    {Title()}
+  </div>
+)
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(parent);
+// root.render(jsxHeading) // rendering react element
+// root.render(<HeadingComponent/>) // rendering react component
+root.render(<DivComponent/>)
