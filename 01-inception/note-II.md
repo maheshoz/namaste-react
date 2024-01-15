@@ -211,11 +211,64 @@ if key is given, only the new item will be rendered/added to the existing compon
 Note : add a key when we map over the component
 Dont use array index as key, it is anti-pattern
 
+**05**
+https://legacy.reactjs.org/docs/faq-structure.html
+
+Make the components file - Header, Body etc..
+
+Do not put Hardcoded data in Components Folder.
+
+Types of import/export
+
+- Default export/import
+```
+export default Component;
+import Component from "path";
+```
+- named import/export
+```
+export const Component;
+import {Component} from "path";
+```
 
 
+In a file, we can have only one default export. for multiple export we can use named export
 
+Keep the components small, use 100 lines for component
 
+Adding events
+- events are camelCase in react attributes unlike js events
+```js
+ <button 
+          className='filter-btn'
+          onClick={() => {
+            resList = resList.filter(
+              res => res.info.avgRating > 4
+            );
+          }}
+          onMouseOver={() => {
+            console.log('mouse over');
+          }}
+        >
+          Top Rated Restaurants
+        </button>
+```
+If the data changes, the UI changes 
 
+### React Hooks
+Normal JS utility functions
+- useState()
+- useEffect()
 
+Whenever a state variable changes, react rerenders the component
+
+**Reconciliation Algorithm or React Fiber** 
+- Virtual DOM - it is representatin of  actual DOM
+- Diff algorithm - when state chagnes, it finds the difference b/w previous and updated virtual DOM
+- incremental rendering
+
+https://legacy.reactjs.org/docs/reconciliation.html#gatsby-focus-wrapper
+
+https://github.com/acdlite/react-fiber-architecture
 
 
