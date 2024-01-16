@@ -253,6 +253,29 @@ Adding events
           Top Rated Restaurants
         </button>
 ```
+
+```js
+<button 
+          className='filter-btn'
+          onClick={() => {
+            // filter based on rating
+            listOfRestaurants.forEach(item => {console.log(item.info.avgRating);})
+            
+            let filteredList = listOfRestaurants.filter( res => res.info.avgRating > 4.1 );
+            console.log(filteredList);
+            
+            // let filteredList = [];
+            // listOfRestaurants.forEach(item => {
+            //   if(item.info.avgRating > 4.1) filteredList.push(item)
+            // })
+            // console.log(filteredList);
+
+            setListOfRestaurants(filteredList);
+         
+          }}>
+          Top Rated Restaurants
+  </button>
+```
 If the data changes, the UI changes 
 
 ### React Hooks
@@ -272,3 +295,164 @@ https://legacy.reactjs.org/docs/reconciliation.html#gatsby-focus-wrapper
 https://github.com/acdlite/react-fiber-architecture
 
 
+### 06
+about Monolith and Microservice architecture
+
+Monolith - has all the API, UI, Auth, DB, SMS modules
+
+Microservie - Different servies for different jobs- UI , API, Email . Seperation of Concerns, Single Responsibilty Principle
+
+ex: 
+```
+application can use Different ports for different Microservices
+:1234 UI      /
+:1000 Backend /api
+:3000 SMS    /sms
+```
+
+https://www.atlassian.com/microservices/microservices-architecture/microservices-vs-monolith
+
+
+render api data after we get a response, user has to wait and view a blank screen till api success
+Load -> API -> Render 
+
+load the component and when we get API response rerender - react follows this approach
+Load -> render - >API -> Render
+its better UX, 
+
+
+### useEffect()
+
+After react renders the component then the useEffect is called
+
+```js
+ useEffect(()=> {
+    console.log('useEffect called');
+  }, []);
+```
+
+CORS - if origin mismatch browser blocks api call
+
+<iframe width="944" height="531" src="https://www.youtube.com/embed/tcLW5d0KAYE" title="CORS, Preflight Request, OPTIONS Method | Access Control Allow Origin Error Explained" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+add Allow CORS chrome extension to browser
+
+<iframe width="800" height="400" src="https://www.youtube.com/embed/KruSUqLdxQA" title="Allow CORS - Browser Extension Review" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+Json viewer website - https://jsonviewer.stack.hu/
+
+```js
+const Body = () => {
+
+  // const [listOfRestaurants, setListOfRestaurants] = useState(resList);
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
+
+  useEffect(()=> {
+    console.log('useEffect called');
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
+
+    const jsonData = await data.json();
+
+    console.log('api data ' , jsonData.data.cards[1].card.card.gridElements.infoWithStyle.restaurants)
+
+    //optional chaining
+    const filterJson = jsonData?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+    //setData to rerender 
+    setListOfRestaurants(filterJson);
+  }
+
+  // console.log('<Body/> component rendered');
+
+  if(listOfRestaurants.length === 0) {
+    return <h1>Loading....</h1>
+  }
+  return (
+    <div className='body'>
+      <div className='filter'>
+        <button 
+          className='filter-btn'
+          onClick={() => {
+            // filter based on rating
+            const filteredList = listOfRestaurants.filter(
+              (res) => res.info.avgRating > 4.4
+            );
+            setListOfRestaurants(filteredList);
+         
+          }}
+         >
+          Top Rated Restaurants
+        </button>
+      </div>
+      <div className='res-container'>
+        {listOfRestaurants.map((restaurant) => (
+          <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+        ))}
+      </div>
+    </div>
+  );
+};
+```
+
+add Shimmer UI
+
+Conditional Rendering
+```js
+if(listOfRestaurants.length === 0) {
+  return <Shimmer/>
+  }
+// use ternary operator
+return listOfRestaurants.length === 0 ? <Shimmer/> : (...)
+```
+
+Renders Header Component on Btn click
+but compares the virtual dom previous state and only updates  btn
+```js
+<button 
+  className="login"
+  onClick={() => {
+    btnName === "Login"
+      ? setBtnName("Logout")
+      : setBtnName("Login");
+  }}
+  >
+    {btnName}
+</button>
+```
+
+Whenever state variables update, react triggres a reconciliation cycle(re-renders the component)
+
+onChange, onClick events
+
+```js
+<input type="text" className="search-box" 
+  value={searchText}
+  onChange={(e)=> {
+    console.log('search val', e.target.value);
+    setSearchText(e.target.value);
+  }}
+/>
+<button
+  onClick={()=> {
+    // Filter the cards and update UI
+    // searchText
+    console.log(searchText);
+    let a = searchText;
+    console.log('a -', a);
+    // if searchText is empty '', return true, 'abc'.includes('') true
+    // so on empty str,filter list has original resDetails
+    const filterRestaurant = listOfRestaurants.filter(
+      res => res.info.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    
+    console.log(filterRestaurant);
+
+    setFilteredRestaurants(filterRestaurant)
+  }}
+>
+  Search</button>
+```
