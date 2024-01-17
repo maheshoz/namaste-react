@@ -4,7 +4,7 @@ const RestaurantCard = ({resData}) => {
   // console.log(resData);
   // console.log(resData.info);
 
-  const {name, cuisines, avgRating, areaName, cloudinaryImageId} = resData.info;
+  const {id, name, cuisines, avgRating, areaName, cloudinaryImageId} = resData.info;
 
   return (
     <div className='res-card'>
@@ -16,7 +16,7 @@ const RestaurantCard = ({resData}) => {
       <h3>{name}</h3>
       <h4>{cuisines.join(", ")}</h4>
       <p>{avgRating} stars</p>
-      <p>{areaName}</p>
+      <p>{areaName} - id: {id}</p>
     </div>
   );
 };
