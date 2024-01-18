@@ -5,8 +5,8 @@ const Header = () => {
 
   const [btnName, setBtnName] = useState("Login");
 
-  console.log("rendered Header Component on Btn click");
-  console.log("but compares the virtual dom previous state and updates only btn");
+  // console.log("rendered Header Component on Btn click");
+  // console.log("but compares the virtual dom previous state and updates only btn");
 
   return (
     <div className='header'>
